@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+button {
+	background-color: darkgrey;
+	border: 1px solid rgb(0, 0, 0);
+}
