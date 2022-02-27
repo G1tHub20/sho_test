@@ -51,7 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         /* @import url('https://fonts.googleapis.com/css2?family=Klee+One&family=Yusei+Magic&display=swap'); */
     </style>
-    <link rel="stylesheet" href="css\style.css">
+    <!-- <link rel="stylesheet" href="css\style.css"> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>小テスト</title>
 </head>
 
@@ -62,14 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
     <h1 id="title">小テスト</h1>
 
-    <ul>
+
         <form method="post" action="">
-        <h2>テストを作成</h2>
-        <ul>
-            <li><button type="submit" name="cre_fillin">穴埋め問題</button></li>
+        <h2><button type="submit" name="cre_fillin">テストを作成</button></h2>
             <!-- <li><button type="submit" name="">選択問題</button></li> -->
-        </ul>
-            <h2><button type="submit" name="take_exam">テストを受ける</button></h2>
+        <h2><button type="submit" name="take_exam">テストを受ける</button></h2>
         </form>
 
 </body>

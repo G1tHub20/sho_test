@@ -36,10 +36,13 @@ function get_var_name($var) {
 
 // var_dumpを見やすくする
 function d($var) {
-  echo get_var_name($var);
-  echo "<pre>";
-  var_dump($var);
-  echo "</pre>";
+  $flag = false;
+  if ($flag) {
+    echo get_var_name($var);
+    echo "<pre>";
+    var_dump($var);
+    echo "</pre>";
+  }
 }
 
 // 定数の定義

@@ -13,10 +13,23 @@ $check = [
   '3' => '',
   '4' => '',
 ];
+$message = '';
 $placeholder = " placeholder='1889年の[2月11日]に、大日本帝国憲法が発布された。'";
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  echo 'submit';
+  // echo 'submit';
+
+  $check = [
+    '0' => '',
+    '1' => '',
+    '2' => '',
+    '3' => '',
+    '4' => '',
+  ];
+  array_filter($check);
+
+
 
   $subject = filter_input(INPUT_POST, 'subject', FILTER_SANITIZE_STRING); //←取得できていない
   d($subject);
@@ -39,15 +52,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
   // チェック１がOKなら
-  if (empty($check)) {
-    echo '文字列チェックOK';
+  if ($check[4] === '') {
+  // if (empty($check)) {
+    // echo '文字列チェックOK';
 
     // 切り出し
     $start[] = mb_strpos($target[$i], '[') + 1; //開始位置（+1する）
     $end[] = mb_strpos($target[$i], ']'); //終了位置
-    echo '開始位置';
+    // echo '開始位置';
     d($start[$i]);
-    echo '終了位置';
+    // echo '終了位置';
     d($end[$i]);
     $length[] = $end[$i] - $start[$i]; //文字列長（終了位置 - 開始位置）
     $mid[] = mb_substr($target[$i], $start[$i], $length[$i]); //対象文字列、開始位置、文字列長
@@ -112,15 +126,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
   if ($result) {
-    echo 'DBに登録完了';
+    // echo 'DBに登録完了';
+    echo '<h2>テストの作成完了！</h2>';
   }
 
 } else {
-  echo '<p>文字列チェックNG！</p>';
-  echo '<p>入力し直してください</p>';
+  $message = '<h2>文字列チェックNG！</h2><h2>入力し直してください</h2>';
 }
 
 }
+
+if ($subject) {
+
+}
+
+} else {
+  // 初期表示（GET）は初期化（※エラー対策）
+  $target = [
+    '0' => '',
+    '1' => '',
+    '2' => '',
+    '3' => '',
+    '4' => '',
+  ];
 }
 ?>
 
@@ -134,22 +162,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <?php include 'inc/header.php'; ?>
-  <h1>テストを作成</h1>
-  <h2>穴埋め問題</h2>
+<h1>テストを作成</h1>
+<h2>穴埋め問題</h2>
+<?php echo $message; ?>
   <form method="post" action="">
-    <p>科目：<input type="text" name="subject" list="example" placeholder="選択肢になければ入力" title="※選び直す場合は入力を削除" required></p>
-    <datalist id="example">
-      <option value="国語"></option>
-      <option value="数学"></option>
-      <option value="英語"></option>
-      <option value="歴史"></option>
-      <option value="理科"></option>
-    </datalist>
-    <p>穴埋め部分を<b>[ ]</b>で囲んで問題文を作成してください。</p>
+  <p>テストの科目を選んでください。</p>
+  科目：
+    <select name="subject" required>
+      <option hidden>ここから選択</option>
+      <option value="国語">国語</option>
+      <option value="数学">数学</option>
+      <option value="英語">英語</option>
+      <option value="理科">理科</option>
+      <option value="社会">社会</option>
+      <option value="その他">その他</option>
+    </select>
+    <p title="（注意）全角の[ ]は使用できません">穴埋め部分を<b>[ ]</b>で囲んで5つの問題文を作成してください。</p>
 
     <?php for ($i = 0; $i < 5; $i++): ?>
       <h3>問<?php echo $i + 1 ?></h3>
-      <textarea name="no<?php echo $i; ?>" rows="5" cols="44" <?php if ($i === 0) echo $placeholder; ?>><?php echo $target[$i]; ?></textarea><br>
+      <textarea name="no<?php echo $i; ?>" rows="5" cols="44" <?php if ($i === 0) echo $placeholder; ?> required><?php echo $target[$i]; ?></textarea><br>
     <?php endfor; ?>
     <button type="submit">これで作成</button>
   </form>

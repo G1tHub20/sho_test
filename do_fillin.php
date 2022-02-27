@@ -21,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   d($_SESSION['answer']);
 
 } else {
-  echo '解答開始前';
+  // echo '解答開始前';
 
-  $data = $_SESSION['question'];
-  d($data);
+  // $data = $_SESSION['question']; //POST送信で消えてしまう
+  d($_SESSION['question']);
 
   $form = [
     0 => '',
