@@ -15,6 +15,7 @@ $stmt = $dbh->query("SELECT CONCAT('test', id) as test_id, id, type, subject, us
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css\style.css">
   <title>テスト一覧｜小テスト</title>
 </head>
 <body>
@@ -22,10 +23,10 @@ $stmt = $dbh->query("SELECT CONCAT('test', id) as test_id, id, type, subject, us
   <h1>テスト一覧</h1>
 
   <table>
-    <tr><th>テスト名</th><th>ジャンル</th><th>科目</th><th>平均点</th><th>受験者数</th><th>受験</th></tr>
+    <tr><th>テスト名</th><!-- <th>ジャンル</th>--><th>科目</th><th>平均点</th><th>受験者数</th><th></th></tr>
     <?php foreach ($stmt as $row): ?>
-      <tr><td><?php echo $row['test_id'] ?></td><td><?php echo $row['type'] ?></td><td><?php echo $row['subject'] ?>
-    </td><td><?php echo $row['avg_score'] ?></td><td><?php echo $row['takers'] ?></td><td><a href="take_exam.php?test=<?php echo $row['id'] ?>">受験</a></td></tr>
+      <tr><td><?php echo $row['test_id'] ?></td><td><?php echo $row['subject'] ?>
+    </td><td><?php echo $row['avg_score'] ?></td><td><?php echo $row['takers'] ?></td><td><button onclick="location.href='take_exam.php?test=<?php echo $row['id'] ?>'">受験</button></td></tr>
     <?php endforeach; ?>
   </table>
 

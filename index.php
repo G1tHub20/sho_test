@@ -28,10 +28,10 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['cre_fillin'])) {
         header('Location: cre_fillin.php');
-        echo 'fillin';
+        // echo 'fillin';
     } else if (isset($_POST['take_exam'])) {
         header('Location: exams.php');
-        echo 'take_exam';
+        // echo 'take_exam';
     }
     exit();
 }
@@ -51,10 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         /* @import url('https://fonts.googleapis.com/css2?family=Klee+One&family=Yusei+Magic&display=swap'); */
     </style>
-    <!-- <link rel="stylesheet" href="css\style.css"> -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css\style.css">
     <title>小テスト</title>
 </head>
 
@@ -67,9 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         <form method="post" action="">
-        <h2><button type="submit" name="cre_fillin">テストを作成</button></h2>
+        <div class="button_wrapper"><button type="submit" name="cre_fillin">テスト問題を作成</button></div>
             <!-- <li><button type="submit" name="">選択問題</button></li> -->
-        <h2><button type="submit" name="take_exam">テストを受ける</button></h2>
+        <div class="button_wrapper"><button type="submit" name="take_exam">テストを受ける</button></div>
         </form>
 
 </body>

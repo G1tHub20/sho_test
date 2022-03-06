@@ -2,9 +2,7 @@
 require('library.php');
 session_start();
 
-$form = [];
 $error = [];
-$subject = [];
 $id = $_SESSION['user_id'];
 $check = [
   '0' => '',
@@ -14,69 +12,61 @@ $check = [
   '4' => '',
 ];
 $message = '';
+$isReady = false;
 $placeholder = " placeholder='1889年の[2月11日]に、大日本帝国憲法が発布された。'";
+$result3 = false;
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // echo 'submit';
 
-  $check = [
-    '0' => '',
-    '1' => '',
-    '2' => '',
-    '3' => '',
-    '4' => '',
-  ];
-  array_filter($check);
-
-
-
-  $subject = filter_input(INPUT_POST, 'subject', FILTER_SANITIZE_STRING); //←取得できていない
+  $subject = $_POST['subject']; //←配列ではなく普通の変数として取得される
   d($subject);
   $type = '穴埋め';
   $addition = 'ここにテストの情報を記載する';
 
+  // ■ 1：チェック：角括弧（[]）を含むか検査
+  // echo '<p>チェック開始</p>';
   for ($i = 0; $i < 5; $i++) {
     $target[] = $_POST['no' . $i];    
-    d($target);
-
-    //チェック１：角括弧（[]）を含むか検査
+    
     if (strpos($target[$i],'[') == false){
-      $check[$i] = '[無し';
+      $check[$i] = '「 <b>[</b> 」をつけてください。';
     }
     if (strpos($target[$i],']') == false){
-      $check[$i] .= ']無し';
+      $check[$i] .= '「<b>]</b>」をつけてください。';
     }
-    d($check);
-    d(array_keys($check));
+  }
+  d($target);
 
 
-  // チェック１がOKなら
-  if ($check[4] === '') {
-  // if (empty($check)) {
-    // echo '文字列チェックOK';
+// ■ 2：穴埋め化
+if (count(array_filter($check)) == 0) { //配列のキーの要素の有無を確認する
+  // echo '全てエラー無し';
+  for ($i = 0; $i < 5; $i++) {
+  // 切り出し
+  $start[] = mb_strpos($target[$i], '[') + 1; //開始位置（+1する） // mb_strpos — 文字列の中に指定した文字列が最初に現れる位置を見つける
+  $end[] = mb_strpos($target[$i], ']'); //終了位置
+  $length[] = $end[$i] - $start[$i]; //文字列長（終了位置 - 開始位置）
+  $mid[] = mb_substr($target[$i], $start[$i], $length[$i]); //対象文字列、開始位置、文字列長
 
-    // 切り出し
-    $start[] = mb_strpos($target[$i], '[') + 1; //開始位置（+1する）
-    $end[] = mb_strpos($target[$i], ']'); //終了位置
-    // echo '開始位置';
-    d($start[$i]);
-    // echo '終了位置';
-    d($end[$i]);
-    $length[] = $end[$i] - $start[$i]; //文字列長（終了位置 - 開始位置）
-    $mid[] = mb_substr($target[$i], $start[$i], $length[$i]); //対象文字列、開始位置、文字列長
-    d($mid[$i]);
+  // 置換
+  $new_target[] = str_replace($mid[$i], '　　　', $target[$i]);
+}
+  d($mid);
+  d($new_target);
+  $isReady = true;
 
-    // 置換
-    $new_target[] = str_replace($mid[$i], '　　　', $target[$i]);
-    d($new_target[$i]);
-    
-    // $check = array_filter( $check, "strlen" ); //空要素を取り除く
+} else {
+  echo 'エラーあり';
+}
 
-
+// ■ チェックと穴埋め化が済んだらDBに登録
+if ($isReady) {
   // DB接続
   $dbh = dbconnect();
 
+  // 1：testテーブル
   // test_idを決定
   $sql = "SELECT MAX(id)+1 AS test_id FROM test";
   $stmt = $dbh->query($sql);
@@ -85,71 +75,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   d($test_id);
 
   // 最初のquestion_idを決定
-  $sql = "SELECT MAX(id)+1 AS question_id FROM questions";
-  $stmt = $dbh->query($sql);
-  $row2 = $stmt->fetch();
-  $question_id = $row2['question_id'];
-  d($question_id);
+  // $sql = "SELECT MAX(id)+1 AS question_id FROM questions";
 
+  // $stmt = $dbh->query($sql);
+  // $row2 = $stmt->fetch();
+  // $question_id = $row2['question_id'];
+  // d($question_id);
 
   // testテーブルに登録
-  $subject = 'その他';
+  // $subject = 'その他';
 
-  $stmt2 = $dbh->prepare("INSERT INTO test(type, subject, user_id, addition) VALUES (:type, :subject, :user_id, :addition)");
-  $stmt2->bindValue(':type', $type);
-  $stmt2->bindValue(':subject', $subject);
-  $stmt2->bindValue(':user_id', $id);
-  $stmt2->bindValue(':addition', $addition);
-  $result = $stmt2->execute();
+  $stmt1 = $dbh->prepare("INSERT INTO test(subject, user_id, addition) VALUES (:subject, :user_id, :addition)");
+  $stmt1->bindValue(':subject', $subject);
+  $stmt1->bindValue(':user_id', $id);
+  $stmt1->bindValue(':addition', $addition);
+  $result1 = $stmt1->execute();
 
-  if ($result) {
-  // questionsテーブルに登録
-  $sql1 = "INSERT INTO questions (question, test_id) VALUES
-  ('$new_target[0]', $test_id),
-  ('$new_target[1]', $test_id),
-  ('$new_target[2]', $test_id),
-  ('$new_target[3]', $test_id),
-  ('$new_target[4]', $test_id)";
-  $result = $dbh->query($sql1);
+  // echo '$result1：' . $result1;
+
+  // 2：questionsテーブル
+    // question_idを決定
+    // $sql = "SELECT MAX(id)+1 AS question_id FROM questions";
+    $stmt2 = $dbh->query("SELECT MAX(id)+1 AS question_id FROM questions");
+    $row = $stmt2->fetch();
+    $question_id = $row['question_id'];
+    
+    if ($result1 == 1) {
+      $sql2 = "INSERT INTO questions (question, test_id) VALUES
+    ('$new_target[0]', $test_id),
+    ('$new_target[1]', $test_id),
+    ('$new_target[2]', $test_id),
+    ('$new_target[3]', $test_id),
+    ('$new_target[4]', $test_id)";
+    $result2 = $dbh->query($sql2);
+    
+    d($result2);
   }
+  
+  // 3：answersテーブル
+  d($question_id);
+  d($result2);
 
-  // answersテーブルに登録
-  if ($result) {
+  if ($result2 != false) {
   $sql2 = "INSERT INTO answers (correct, question_id) VALUES
   ('$mid[0]', $question_id),
   ('$mid[1]', $question_id+1),
   ('$mid[2]', $question_id+2),
   ('$mid[3]', $question_id+3),
   ('$mid[4]', $question_id+4)";
-  $result = $dbh->query($sql2);
+  $result3 = $dbh->query($sql2);
   }
 
-
-  if ($result) {
-    // echo 'DBに登録完了';
-    echo '<h2>テストの作成完了！</h2>';
-  }
-
-} else {
-  $message = '<h2>文字列チェックNG！</h2><h2>入力し直してください</h2>';
+}
 }
 
-}
 
-if ($subject) {
-
-}
-
-} else {
-  // 初期表示（GET）は初期化（※エラー対策）
-  $target = [
-    '0' => '',
-    '1' => '',
-    '2' => '',
-    '3' => '',
-    '4' => '',
-  ];
-}
 ?>
 
 <!DOCTYPE html>
@@ -158,6 +138,7 @@ if ($subject) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css\style.css">
   <title>作成｜小テスト</title>
 </head>
 <body>
@@ -169,7 +150,7 @@ if ($subject) {
   <p>テストの科目を選んでください。</p>
   科目：
     <select name="subject" required>
-      <option hidden>ここから選択</option>
+      <option value="" hidden>選択してください </option>
       <option value="国語">国語</option>
       <option value="数学">数学</option>
       <option value="英語">英語</option>
@@ -181,11 +162,18 @@ if ($subject) {
 
     <?php for ($i = 0; $i < 5; $i++): ?>
       <h3>問<?php echo $i + 1 ?></h3>
-      <textarea name="no<?php echo $i; ?>" rows="5" cols="44" <?php if ($i === 0) echo $placeholder; ?> required><?php echo $target[$i]; ?></textarea><br>
-    <?php endfor; ?>
-    <button type="submit">これで作成</button>
+      <textarea name="no<?php echo $i; ?>" rows="5" cols="44" <?php if ($i === 0) echo $placeholder; ?> required><?php if (isset($target[$i]) && ($target[$i] !== '')) { echo $target[$i];} ?></textarea><br>
+      <p class="error"><?php echo $check[$i]; ?></p>
+      <?php endfor; ?>
+    <?php if (!$result3) { echo('<button type="submit">これで作成</button>'); } ?>
   </form>
-
+  <?php
+  if ($result3 != false) {
+    // echo 'DBに登録完了';
+    echo '<h2>テストの作成完了！</h2>';
+    echo "<p><a href= 'index.php'>Home</a></p>";
+  }
+  ?>
 
 </body>
 </html>

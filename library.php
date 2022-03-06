@@ -10,6 +10,10 @@ function dbconnect() {
     $dsn = 'mysql:dbname=sho_test;host=localhost;charset=utf8';
     $user = 'root';
     $password = 'mysqlpa55';
+    // Xfree用
+    // $dsn = 'mysql:dbname=morismo_wp;host=mysql1.php.xdomain.ne.jp;charset=utf8';
+    // $user = 'morismo_mydb';
+
     $dbh = new PDO ($dsn, $user, $password, [
     // お決まりのオプション
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //カラム名をキーとする連想配列で取得

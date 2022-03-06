@@ -31,7 +31,7 @@ for ($i=0; $i<5; $i++) {
     $score += 20;
     $sign[] = '○';
   } else {
-    echo '問' . $i+1 . '=' . '×';
+    // echo '問' . $i+1 . '=' . '×';
     $is_correct[$i] = false;
     $sign[] = '×';
   }
@@ -41,7 +41,7 @@ for ($i=0; $i<5; $i++) {
 // d($sign);
 
 for ($i=0; $i<5; $i++) {
-  $tmp_correct = "[" . $correct[$i] . "]";
+  $tmp_correct = "[" . $answer[$i] . "]";
   $question[$i] = str_replace('[　　　]', $tmp_correct, $question[$i]['question']);
 }
 
@@ -49,7 +49,7 @@ $test_id = $_SESSION['test']['id'];
 $user_id = $_SESSION['user_id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  echo 'DBに反映';
+  // echo 'DBに反映';
 
 // DBに受験履歴を反映
 $dbh = dbconnect();
@@ -66,7 +66,7 @@ $stmt1->bindValue(':test_id', $test_id, PDO::PARAM_INT);
 $stmt1->execute();
 $row1 = $stmt1->fetch();
 $avg_score = round($row1['avg_score']);
-echo $avg_score;
+// echo $avg_score;
 
 //受験者数の取得
 $stmt2 = $dbh->prepare('SELECT COUNT(*) AS takers FROM history WHERE test_id=:test_id');
@@ -74,7 +74,7 @@ $stmt2->bindValue(':test_id', $test_id, PDO::PARAM_INT);
 $stmt2->execute();
 $row2 = $stmt2->fetch();
 $takers = $row2['takers'];
-echo $takers;
+// echo $takers;
 
 $stmt3 = $dbh->prepare('UPDATE test SET avg_score=:avg_score, takers=:takers WHERE id=:id');
 $stmt3->bindValue(':avg_score', $avg_score, PDO::PARAM_INT);
@@ -83,11 +83,11 @@ $stmt3->bindValue(':id', $test_id, PDO::PARAM_INT);
 $result = $stmt3->execute();
 
 if ($result) {
-  echo '反映OK';
-  header('Location: kaito.php');
+  // echo '反映OK';
+  header('Location: result.php');
   exit();
 } else {
-  echo '反映NG';
+  // echo '反映NG';
 }
 
 }
