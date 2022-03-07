@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $subject = $_POST['subject']; //←配列ではなく普通の変数として取得される
   d($subject);
   $type = '穴埋め';
-  $addition = 'ここにテストの情報を記載する';
+  $addition = $_POST['addition'];
 
   // ■ 1：チェック：角括弧（[]）を含むか検査
   // echo '<p>チェック開始</p>';
@@ -143,11 +143,11 @@ if ($isReady) {
 </head>
 <body>
 <?php include 'inc/header.php'; ?>
-<h1>テストを作成</h1>
-<h2>穴埋め問題</h2>
+<h1>テスト（穴埋め問題）作成</h1>
+<h2></h2>
 <?php echo $message; ?>
   <form method="post" action="">
-  <p>テストの科目を選んでください。</p>
+  <p>テスト科目を選んでください</p>
   科目：
     <select name="subject" required>
       <option value="" hidden>選択してください </option>
@@ -162,9 +162,11 @@ if ($isReady) {
 
     <?php for ($i = 0; $i < 5; $i++): ?>
       <h3>問<?php echo $i + 1 ?></h3>
-      <textarea name="no<?php echo $i; ?>" rows="5" cols="44" <?php if ($i === 0) echo $placeholder; ?> required><?php if (isset($target[$i]) && ($target[$i] !== '')) { echo $target[$i];} ?></textarea><br>
+      <textarea name="no<?php echo $i; ?>" rows="4" cols="44" <?php if ($i === 0) echo $placeholder; ?> required><?php if (isset($target[$i]) && ($target[$i] !== '')) { echo $target[$i];} ?></textarea>
       <p class="error"><?php echo $check[$i]; ?></p>
-      <?php endfor; ?>
+    <?php endfor; ?>
+    <p>補足（任意）</p>
+    <textarea name="addition" rows="3" cols="30" value="<?php if ($addition != '') { echo $addition; } ?>" placeholder="内閣と憲法について"></textarea><br>
     <?php if (!$result3) { echo('<button type="submit">これで作成</button>'); } ?>
   </form>
   <?php
@@ -175,5 +177,6 @@ if ($isReady) {
   }
   ?>
 
+<footer class="footer">&nbsp;</footer>
 </body>
 </html>

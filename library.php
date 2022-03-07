@@ -9,10 +9,10 @@ function dbconnect() {
   try {
     $dsn = 'mysql:dbname=sho_test;host=localhost;charset=utf8';
     $user = 'root';
-    $password = 'mysqlpa55';
     // Xfree用
     // $dsn = 'mysql:dbname=morismo_wp;host=mysql1.php.xdomain.ne.jp;charset=utf8';
     // $user = 'morismo_mydb';
+    $password = 'mysqlpa55';
 
     $dbh = new PDO ($dsn, $user, $password, [
     // お決まりのオプション

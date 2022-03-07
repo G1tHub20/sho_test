@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   d($_SESSION['answer']);
 
 } else {
-  echo '解答開始前';
+  // echo '解答開始前';
   // $data = $_SESSION['question']; //POST送信で消えてしまう
   d($_SESSION['question']);
 
@@ -56,7 +56,7 @@ $question_form = <<<END
   <br>
   <div class="button_wrapper" name="next"><button type="submit">{$button}</button></div>
 </form>
-<button class="short" onclick="location.href='./exams.php'">退席する</button>
+<button class="short" onclick="location.href='./exams.php'">退席</button>
 END;
 } else {
   // 全問解答し終えたら
@@ -86,6 +86,7 @@ END2;
   <h1>解答</h1>
   <?php echo $question_form; ?>
 
+  <footer class="footer">&nbsp;</footer>
 </body>
 </html>
 

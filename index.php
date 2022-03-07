@@ -67,9 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         <form method="post" action="">
-        <div class="button_wrapper"><button type="submit" name="cre_fillin">テスト問題を作成</button></div>
+        <div class="button_wrapper filler"><button type="submit" name="cre_fillin">テストを作成</button></div>
             <!-- <li><button type="submit" name="">選択問題</button></li> -->
         <div class="button_wrapper"><button type="submit" name="take_exam">テストを受ける</button></div>
         </form>
 
+        <footer class="footer">&nbsp;</footer>
 </body>

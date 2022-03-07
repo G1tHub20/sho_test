@@ -116,5 +116,7 @@ if ($result) {
     <p><input type="text" class="red" value="<?php echo $correct[$i]; ?>" readonly></p>
   <?php endif; ?>
 <?php endfor; ?>
+
+<footer class="footer">&nbsp;</footer>
 </body>
 </html>

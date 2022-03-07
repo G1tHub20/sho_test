@@ -56,5 +56,7 @@ if (isset($test_id)) {
   <p>作成者：user<?php echo sprintf('%03d', $test['user_id']); ?></p>
   <p>補足：<?php echo $test['addition']; ?></p>
   <button onclick="location.href='./do_fillin.php?test=<?php echo $test_id; ?>'">開始する</button>
+
+  <footer class="footer">&nbsp;</footer>
 </body>
 </html>
