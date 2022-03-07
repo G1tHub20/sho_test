@@ -24,11 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   d($subject);
   $type = '穴埋め';
   $addition = $_POST['addition'];
+  d($addition);
 
   // ■ 1：チェック：角括弧（[]）を含むか検査
   // echo '<p>チェック開始</p>';
   for ($i = 0; $i < 5; $i++) {
-    $target[] = $_POST['no' . $i];    
+    $target[] = $_POST['no' . $i];
+
+    d($target);
+    // 全角角括弧の置換
+    $target[$i] = str_replace('［', '[', $target[$i]);
+    $target[$i] = str_replace('］', ']', $target[$i]);
+    d($target);
     
     if (strpos($target[$i],'[') == false){
       $check[$i] = '「 <b>[</b> 」をつけてください。';
@@ -44,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (count(array_filter($check)) == 0) { //配列のキーの要素の有無を確認する
   // echo '全てエラー無し';
   for ($i = 0; $i < 5; $i++) {
+
   // 切り出し
   $start[] = mb_strpos($target[$i], '[') + 1; //開始位置（+1する） // mb_strpos — 文字列の中に指定した文字列が最初に現れる位置を見つける
   $end[] = mb_strpos($target[$i], ']'); //終了位置
@@ -162,11 +170,11 @@ if ($isReady) {
 
     <?php for ($i = 0; $i < 5; $i++): ?>
       <h3>問<?php echo $i + 1 ?></h3>
-      <textarea name="no<?php echo $i; ?>" rows="4" cols="44" <?php if ($i === 0) echo $placeholder; ?> required><?php if (isset($target[$i]) && ($target[$i] !== '')) { echo $target[$i];} ?></textarea>
+      <textarea name="no<?php echo $i; ?>" rows="4" cols="35" <?php if ($i === 0) echo $placeholder; ?> required><?php if (isset($target[$i]) && ($target[$i] !== '')) { echo $target[$i];} ?></textarea>
       <p class="error"><?php echo $check[$i]; ?></p>
     <?php endfor; ?>
     <p>補足（任意）</p>
-    <textarea name="addition" rows="3" cols="30" value="<?php if ($addition != '') { echo $addition; } ?>" placeholder="内閣と憲法について"></textarea><br>
+    <textarea name="addition" rows="2" cols="25" placeholder="内閣と憲法について"><?php if (isset($_POST['addition'])) { echo $_POST['addition']; } ?></textarea><br>
     <?php if (!$result3) { echo('<button type="submit">これで作成</button>'); } ?>
   </form>
   <?php

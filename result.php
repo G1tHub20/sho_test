@@ -99,14 +99,12 @@ if ($result) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style type="text/css">
-    .red {color:red;}
-  </style>
+  <link rel="stylesheet" href="css\style.css">
   <title>解答ページ</title>
 </head>
 <body>
 <?php include 'inc/header.php'; ?>
-<h1>解答ページ</h1>
+<h1>答案用紙</h1>
 <h2 class="red"><?php echo $score . '点'; ?></h2>
 <p>次の[　]に当てはまる語句を答えなさい。</p>
 <?php for ($i = 0; $i < 5; $i++): ?>

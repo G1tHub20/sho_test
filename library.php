@@ -7,6 +7,7 @@ function h($value) {
 // DB接続
 function dbconnect() {
   try {
+    // ローカル用
     $dsn = 'mysql:dbname=sho_test;host=localhost;charset=utf8';
     $user = 'root';
     // Xfree用
@@ -40,7 +41,7 @@ function get_var_name($var) {
 
 // var_dumpを見やすくする
 function d($var) {
-  $flag = false;
+  $flag = true;
   if ($flag) {
     echo get_var_name($var);
     echo "<pre>";

@@ -44,6 +44,7 @@ if (isset($test_id)) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css\style.css">
   <title>解答｜小テスト</title>
 </head>
 <body>
@@ -51,7 +52,7 @@ if (isset($test_id)) {
   <h1>解答</h1>
 
   <h2>test<?php echo sprintf('%03d', $test_id); ?></h2>
-  <p>形式：<?php echo $test['type']; ?></p>
+  <!-- <p>形式：<?php echo $test['type']; ?></p> -->
   <p>科目：<?php echo $test['subject']; ?></p>
   <p>作成者：user<?php echo sprintf('%03d', $test['user_id']); ?></p>
   <p>補足：<?php echo $test['addition']; ?></p>

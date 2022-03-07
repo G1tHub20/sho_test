@@ -1,11 +1,20 @@
 <?php
 require('library.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $subject = $_POST['subject'];
-  d($subject);
-  // echo $subject;
-} ?>
+$target[0] = '1889年の[2月11日]に、大日本帝国憲法が発布された。';
+$target[1] = '議会に衆議院と［貴族院］の二院制が採用されることも定められた。';
+d($target);
+
+for ($i=0; $i<2; $i++) {
+  // $target2 = str_replace('院', '忍', $target[$i]);
+  $target[$i] = str_replace('［', '[', $target[$i]);
+  $target[$i] = str_replace('］', ']', $target[$i]);
+}
+
+d($target);
+d($target);
+
+?>
 
 
 <form method="post" action="">
