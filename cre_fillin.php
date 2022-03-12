@@ -151,6 +151,7 @@ if ($isReady) {
 </head>
 <body>
 <?php include 'inc/header.php'; ?>
+<div class="container">
 <h1>テスト（穴埋め問題）作成</h1>
 <h2></h2>
 <?php echo $message; ?>
@@ -186,5 +187,6 @@ if ($isReady) {
   ?>
 
 <footer class="footer">&nbsp;</footer>
+</div>
 </body>
 </html>

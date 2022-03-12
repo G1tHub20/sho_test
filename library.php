@@ -41,7 +41,7 @@ function get_var_name($var) {
 
 // var_dumpを見やすくする
 function d($var) {
-  $flag = true;
+  $flag = false;
   if ($flag) {
     echo get_var_name($var);
     echo "<pre>";

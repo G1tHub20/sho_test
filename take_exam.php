@@ -49,6 +49,7 @@ if (isset($test_id)) {
 </head>
 <body>
 <?php include 'inc/header.php'; ?>
+<div class="container">
   <h1>解答</h1>
 
   <h2>test<?php echo sprintf('%03d', $test_id); ?></h2>
@@ -59,5 +60,6 @@ if (isset($test_id)) {
   <button onclick="location.href='./do_fillin.php?test=<?php echo $test_id; ?>'">開始する</button>
 
   <footer class="footer">&nbsp;</footer>
+</div>
 </body>
 </html>

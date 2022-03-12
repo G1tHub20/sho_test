@@ -59,10 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php
-    echo 'ようこそ ' . $user_id  . ' さん';
-    
-    ?>
+<header>
+    <a href="./index.php" class="home"><img src="img/home_icon.svg" alt="HOME"></a>
+    <p class="user"><?php echo ' ようこそ ' . $user_id  . ' さん'; ?></p>
+</header>
+<div class="container">
     <h1 id="title">小テスト</h1>
 
 
@@ -73,4 +74,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <footer class="footer">&nbsp;</footer>
+</div>
 </body>

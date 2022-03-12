@@ -20,6 +20,7 @@ $stmt = $dbh->query("SELECT CONCAT('test', id) as test_id, id, type, subject, us
 </head>
 <body>
 <?php include 'inc/header.php'; ?>
+<div class="container">
   <h1>テスト一覧</h1>
 
   <table>
@@ -29,6 +30,6 @@ $stmt = $dbh->query("SELECT CONCAT('test', id) as test_id, id, type, subject, us
     </td><td><?php echo $row['avg_score'] ?></td><td><?php echo $row['takers'] ?></td><td><button onclick="location.href='take_exam.php?test=<?php echo $row['id'] ?>'">受験</button></td></tr>
     <?php endforeach; ?>
   </table>
-
+</div>
 </body>
 </html>

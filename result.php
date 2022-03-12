@@ -104,6 +104,7 @@ if ($result) {
 </head>
 <body>
 <?php include 'inc/header.php'; ?>
+<div class="container">
 <h1>答案用紙</h1>
 <h2 class="red"><?php echo $score . '点'; ?></h2>
 <p>次の[　]に当てはまる語句を答えなさい。</p>
@@ -116,5 +117,6 @@ if ($result) {
 <?php endfor; ?>
 
 <footer class="footer">&nbsp;</footer>
+</div>
 </body>
 </html>

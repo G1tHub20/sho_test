@@ -83,10 +83,12 @@ END2;
 </head>
 <body>
 <?php include 'inc/header.php'; ?>
+<div class="container">
   <h1>解答</h1>
   <?php echo $question_form; ?>
 
   <footer class="footer">&nbsp;</footer>
+</div>
 </body>
 </html>
 
