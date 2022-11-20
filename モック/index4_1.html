@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="みんなで小テストするサイト"> <!-- ページの概要や要約 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- viewport -->
+    <link rel="icon" href="img/favicon.ico">  <!-- ファビコン -->
+     <!-- リセットCSS -->
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    <!-- 'Klee One', 'Yusei Magic'（Googleフォント） -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Klee+One&family=Yusei+Magic&display=swap');
+    </style>
+    <link rel="stylesheet" href="css\style.css">
+    <title>小テスト</title>
+</head>
+
+<body>
+    <h1 id="title">テストを作成</h1>
+
+    <h2>選択問題</h2>
+    <p>問題文を入力し選択肢を設定</p>
+
+    <h3>第1問</h3>
+    <textarea rows="5" cols="44">世界恐慌に対しアメリカがとった政策は何か？</textarea><br>
+    <div class="choices">
+        <div>1<input type="text" value="ブロック経済"></div>
+        <div>2<input type="text" value="共産制作"></div>
+        <div>3<input type="text" value="ニューディール政策"></div>
+        <div>4<input type="text" value=""></div>
+    </div>
+<button id="graybtn">これで作成</button>
+
+</body>
+
+</html>

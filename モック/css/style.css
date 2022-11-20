@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+* {
+	list-style-type: none;
+}
+
+html {
+	font-size: 100%;
+}
+
+body {
+	width: 100%;
+	box-sizing: border-box;
+	color:#030303;
+	font-size: 1.03rem; /* 全体設定 */
+	font-family: 'Klee One', cursive;
+	/* background-color: rgb(255, 255, 249); */
+	background-color: rgb(189, 189, 9);
+	
+	padding: 3px;
+}
+
+textarea, button, input {
+	border-style: solid;
+}
+
+a {
+	color:#030303;
+	text-decoration: none;
+}
+img {
+	max-width:100%;
+}
+
+table {
+border:0.7px black solid;
+border-collapse:collapse;
+}
+
+td, th {
+	border:0.5px black solid;
+}
+
+#title {
+	font-family: 'Yusei Magic', sans-serif;
+	font-size: 1.5em;
+	font-weight: 100;
+}
+
+.btn {
+	width: 85%;
+	padding: 0.5em 1em;
+  margin: 1em 0;
+	font-size: 1.4em;
+  font-weight: bold;
+  border: solid 2.5px #000000;
+	border-radius: 3px;
+	box-shadow: 1px 2px 3px #8f8f8f;
+}
+
+.btn:active {
+	transform: translateY(3px);/*下に動く*/
+	box-shadow: none;
+}
+
+ul {
+	width: 90%;
+	margin: 0 auto;
+}
+
+li a{
+    display: block;
+    height: 100%;
+    width: 100%;
+	text-align: center;
+}
+
+.choices {
+	display: flex;
+	flex-wrap: wrap;
+	/* width: 100%; */
+}
+
+.choices div {
+	width: 50%;
+}
+
+button {
+	background-color: #8f8f8f;
+  border-width: 2px;
+	color: red;
+}
+
+
+
+@media screen and (max-width: 1024px) {
+	
+	button {
+		background-color: #8f8f8f;
+		border-width: 2px;
+	}
+
+}
+/* PC基準 */
+/* PC：設定なし（実質1025px以上） */
+/* タブレット：1024px [max-width : 1024px] */
+/* スマートフォン：599px [max-width : 599px] */
+
+/* スマホ基準 */
+/* スマホ：設定なし（実質599px以下） */
+/* タブレット：600px [min-width : 600px] */
+/* PC：1,025px [min-width : 1025px] */
+
